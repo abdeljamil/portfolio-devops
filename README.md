@@ -1,59 +1,125 @@
-# PortfolioDevops
+# 🅰️ Portfolio DevOps — Angular 20
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+Portfolio Angular en temps réel reflétant une progression DevOps : Linux → Docker → AWS → CI/CD.
 
-## Development server
+## 🛠 Stack
+- **Angular 20** — Standalone components, Signals, @defer
+- **Tailwind CSS v3** — Dark mode, thème terminal custom
+- **Angular Animations** — Route transitions, stagger reveals
+- **TypeScript strict**
 
-To start a local development server, run:
+## 🚀 Installation
 
+### Prérequis
 ```bash
-ng serve
+node -v     # >= 20
+ng version  # Angular CLI 21 ✅
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### 1. Créer le projet Angular
 ```bash
-ng generate component component-name
+ng new portfolio-devops \
+  --style=scss \
+  --routing=true \
+  --standalone=true \
+  --skip-git=false
+cd portfolio-devops
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+### 2. Installer Tailwind CSS
 ```bash
-ng generate --help
+npm install -D tailwindcss postcss autoprefixer @tailwindcss/forms
+npx tailwindcss init
 ```
 
-## Building
+### 3. Copier les fichiers du projet
+Remplace le contenu de `src/` par les fichiers fournis.
 
-To build the project run:
+### 4. Lancer en dev
+```bash
+ng serve --open
+# → http://localhost:4200
+```
 
+### 5. Build production
 ```bash
 ng build
+# Output dans dist/portfolio-devops/
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 📁 Structure
+```
+src/
+├── app/
+│   ├── core/services/
+│   │   ├── devops-progress.service.ts   ← données + signals
+│   │   └── theme.service.ts             ← dark/light mode
+│   ├── shared/components/
+│   │   ├── navbar/                      ← navigation responsive
+│   │   ├── terminal/                    ← widget terminal animé
+│   │   ├── progress-bar/                ← barre réutilisable
+│   │   └── theme-toggle/                ← bouton dark/light
+│   ├── pages/
+│   │   ├── home/          ← hero + roadmap DevOps
+│   │   ├── parcours/      ← timeline stage/formation
+│   │   ├── projets/       ← cards + filtres
+│   │   └── contact/       ← formulaire ReactiveForm
+│   ├── models/            ← interfaces TypeScript
+│   ├── app.routes.ts      ← routing lazy-loaded
+│   └── app.config.ts      ← bootstrap + providers
+└── styles/
+    └── global.scss        ← Tailwind + custom
+```
 
-## Running unit tests
+## ✏️ Personnalisation
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Mettre à jour ta progression
+Édite `src/app/core/services/devops-progress.service.ts` :
+```typescript
+{ id: 'docker', progress: 60 }  // ← change ce nombre au fil du temps
+```
+
+### Ajouter un projet
+```typescript
+private _projects = signal<Project[]>([
+  // ... projets existants
+  {
+    id: 'mon-projet',
+    title: 'Mon nouveau projet',
+    icon: '🔧',
+    description: '...',
+    stack: ['Docker', 'AWS'],
+    githubUrl: 'https://github.com/...',
+    status: 'done'
+  }
+]);
+```
+
+### Changer tes infos de contact
+Édite `src/app/pages/contact/contact.component.ts` :
+```typescript
+socialLinks = [
+  { icon: '📧', label: 'Email', url: 'mailto:TON@EMAIL.COM' },
+  { icon: '⌥', label: 'GitHub', url: 'https://github.com/TON_USER' },
+  { icon: '💼', label: 'LinkedIn', url: 'https://linkedin.com/in/TON_PROFIL' },
+];
+```
+
+## ☁️ Déploiement AWS S3 (à venir dans ta pipeline)
 
 ```bash
-ng test
+# Build
+ng build --configuration production
+
+# Upload sur S3
+aws s3 sync dist/portfolio-devops/ s3://TON-BUCKET --delete
+
+# Activer le site statique
+aws s3 website s3://TON-BUCKET \
+  --index-document index.html \
+  --error-document index.html
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🤖 Généré avec Claude AI
+Ce portfolio a été conçu avec une architecture Angular moderne.
+La pipeline CI/CD avec GitHub Actions vers AWS est la prochaine étape ! 🚀

@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@400;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ── */
+@layer base {
+  * {
+    @apply box-border m-0 p-0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-terminal-bg text-terminal-text font-mono overflow-x-hidden;
+  }
+
+  /* Dark mode body */
+  body.dark {
+    @apply bg-terminal-bg text-terminal-text;
+  }
+
+  body.light {
+    @apply bg-slate-50 text-slate-800;
+  }
+}
+
+/* ── Scanlines effect ── */
+@layer components {
+  .scanlines::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .grid-bg::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Terminal card */
+  .terminal-card {
+    @apply bg-terminal-bg2 border border-terminal-green/20 rounded-lg overflow-hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,255,136,0.04);
+  }
+
+  /* Skill card hover */
+  .skill-card {
+    @apply bg-terminal-bg2 border border-terminal-green/15 rounded-lg p-5
+           transition-all duration-300 relative overflow-hidden cursor-default;
+  }
+  .skill-card:hover {
+    @apply -translate-y-1;
+  }
+
+  /* Progress bar fill animation */
+  .progress-animated {
+    animation: fillBar 1.5s ease forwards;
+  }
+
+  @keyframes fillBar {
+    from { width: 0 !important; }
+  }
+
+  /* Glow text */
+  .glow-green {
+    text-shadow: 0 0 20px rgba(0,255,136,0.5);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050a0e;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0,255,136,0.3);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,255,136,0.6);
+  }
+}
