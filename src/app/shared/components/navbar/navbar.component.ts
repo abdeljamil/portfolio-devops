@@ -9,31 +9,28 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component'
   imports: [RouterLink, RouterLinkActive, ThemeToggleComponent],
   template: `
     <nav
-      class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4
-                bg-[#050a0e]/90 backdrop-blur-md border-b border-green-400/10"
+      class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 md:px-10 py-4
+             bg-black/85 backdrop-blur-md border-b border-white/[0.08]"
     >
       <!-- Logo -->
       <a
         routerLink="/"
-        class="font-black text-lg tracking-tight text-green-400 hover:opacity-80 transition-opacity"
-        style="font-family: 'Syne', sans-serif"
+        class="shrink-0 font-semibold text-sm md:text-base tracking-tight text-white hover:opacity-80 transition-opacity no-underline"
       >
-        dev<span class="text-slate-300">.</span>ops<span
-          class="text-green-400 animate-pulse"
-          >_</span
-        >
+        P.<span class="text-neutral-500">DEVOPS</span>
       </a>
 
-      <!-- Desktop links -->
-      <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
+      <!-- Liens centrés (desktop) -->
+      <ul
+        class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 lg:gap-8 list-none m-0 p-0"
+      >
         @for (link of navLinks; track link.path) {
           <li>
             <a
               [routerLink]="link.path"
-              routerLinkActive="text-green-400"
+              routerLinkActive="text-white"
               [routerLinkActiveOptions]="{ exact: link.path === '/' }"
-              class="text-xs tracking-widest uppercase transition-colors
-                      hover:text-green-400 font-mono no-underline"
+              class="text-[11px] tracking-[0.2em] uppercase transition-colors text-neutral-500 hover:text-white font-medium no-underline"
             >
               {{ link.label }}
             </a>
@@ -41,29 +38,31 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component'
         }
       </ul>
 
-      <!-- Right -->
-      <div class="flex items-center gap-3">
-        <div
-          class="hidden sm:flex items-center gap-2 text-green-400 border border-green-400/40
-                    px-3 py-1 rounded-full text-xs font-mono"
+      <!-- Droite : email + GitHub + thème -->
+      <div class="flex items-center gap-4 shrink-0">
+        <a
+          href="mailto:votre@email.com"
+          class="hidden sm:flex items-center gap-2 text-[11px] tracking-wide text-neutral-400 hover:text-white transition-colors no-underline"
         >
-          <span
-            class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"
-          ></span>
-          En stage · DevOps
-        </div>
+          <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shadow-[0_0_10px_rgba(56,189,248,0.6)]"></span>
+          votre&#64;email.com
+        </a>
+        <a
+          href="https://github.com/pountounyinyi"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hidden sm:inline text-[11px] tracking-[0.15em] uppercase text-neutral-500 hover:text-white transition-colors no-underline"
+        >
+          GitHub
+        </a>
         <app-theme-toggle />
-        <!-- Mobile burger -->
         <button
-          class="md:hidden text-slate-400 hover:text-green-400 transition-colors bg-transparent border-none cursor-pointer"
+          class="md:hidden text-neutral-400 hover:text-white transition-colors bg-transparent border-none cursor-pointer p-1"
+          type="button"
           (click)="mobileOpen.set(!mobileOpen())"
+          aria-label="Menu"
         >
-          <svg
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -79,25 +78,33 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component'
       </div>
     </nav>
 
-    <!-- Mobile menu -->
     @if (mobileOpen()) {
       <div
-        class="fixed top-[65px] left-0 right-0 z-40 bg-[#0a1520] border-b border-green-400/10 md:hidden"
+        class="fixed top-[57px] left-0 right-0 z-40 bg-neutral-950 border-b border-white/[0.08] md:hidden"
       >
-        <ul class="flex flex-col p-4 gap-1 list-none m-0">
+        <ul class="flex flex-col p-4 gap-0 list-none m-0">
           @for (link of navLinks; track link.path) {
             <li>
               <a
                 [routerLink]="link.path"
-                routerLinkActive="text-green-400"
-                class="block py-2 px-4 text-slate-400 text-sm hover:text-green-400
-                        transition-colors rounded no-underline font-mono"
+                routerLinkActive="text-white"
+                class="block py-3 px-2 text-neutral-400 text-xs uppercase tracking-widest hover:text-white transition-colors no-underline border-b border-white/[0.06] last:border-0"
                 (click)="mobileOpen.set(false)"
               >
                 {{ link.label }}
               </a>
             </li>
           }
+          <li class="pt-3 px-2">
+            <a
+              href="https://github.com/pountounyinyi"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-xs uppercase tracking-widest text-neutral-500 no-underline"
+            >
+              GitHub
+            </a>
+          </li>
         </ul>
       </div>
     }
@@ -108,11 +115,11 @@ export class NavbarComponent {
   mobileOpen = signal(false)
 
   navLinks = [
-      { path: '/', label: 'Accueil' },
-      { path: '/about', label: 'À propos' },
-      { path: '/parcours', label: 'Parcours' },
-      { path: '/projets', label: 'Projets' },
-      { path: '/certifications', label: 'Certifications' },
-      { path: '/contact', label: 'Contact' },
+    { path: '/', label: 'Accueil' },
+    { path: '/projets', label: 'Projets' },
+    { path: '/about', label: 'À propos' },
+    { path: '/parcours', label: 'Parcours' },
+    { path: '/certifications', label: 'Certifs' },
+    { path: '/contact', label: 'Contact' },
   ]
 }

@@ -1,13 +1,13 @@
+import {
+    animate,
+    query,
+    style,
+    transition,
+    trigger
+} from '@angular/animations';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import {
-  trigger,
-  transition,
-  style,
-  animate,
-  query
-} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -30,14 +30,10 @@ import {
       <router-outlet #outlet="outlet" />
     </div>
 
-    <footer class="relative z-10 text-center py-6 text-xs font-mono text-slate-600
-                    border-t border-white/5">
-      Construit avec
-      <span class="text-green-400">Angular 21</span> ·
-      Déployé sur <span class="text-green-400">AWS</span> ·
-      Pipeline CI/CD <span class="text-green-400">en cours</span>
-      <br>
-      <span class="text-slate-700">git commit -m "feat: keep learning"</span>
+    <footer class="relative z-10 text-center py-8 text-[11px] text-neutral-600
+                    border-t border-white/[0.06] tracking-wide">
+      Angular · Tailwind ·
+      <span class="text-neutral-500">Portfolio DevOps</span>
     </footer>
   `
 })

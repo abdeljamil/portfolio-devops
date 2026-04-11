@@ -1,14 +1,13 @@
-import { Component, inject } from '@angular/core';
 import {
-  trigger,
-  transition,
-  style,
-  animate,
-  stagger,
-  query
+    animate,
+    query,
+    stagger,
+    style,
+    transition,
+    trigger
 } from '@angular/animations';
+import { Component, inject } from '@angular/core';
 import { DevopsProgressService } from '../../core/services/devops-progress.service';
-import { TimelineItem } from '../../models/portfolio.models';
 
 @Component({
   selector: 'app-parcours',
@@ -26,60 +25,58 @@ import { TimelineItem } from '../../models/portfolio.models';
     ])
   ],
   template: `
-    <main class="min-h-screen px-6 md:px-10 pt-28 pb-20 max-w-3xl mx-auto z-10 relative"
+    <main class="min-h-screen px-5 md:px-10 pt-24 pb-20 max-w-3xl mx-auto z-10 relative"
           @pageEnter>
 
       <div class="mb-12">
-        <div class="text-green-400 text-xs tracking-[0.2em] uppercase font-mono mb-2">
-          // Expérience
+        <div class="text-[11px] tracking-[0.25em] uppercase text-neutral-600 mb-3">
+          Expérience
         </div>
-        <h1 class="text-4xl md:text-5xl tracking-tight text-slate-200"
-            style="font-family: 'Syne', sans-serif; font-weight: 800">
-          Mon <span class="text-green-400">parcours</span>
+        <h1 class="font-display text-4xl md:text-5xl tracking-tight text-white font-bold">
+          Mon <span class="text-neutral-400">parcours</span>
         </h1>
       </div>
 
       <!-- Timeline -->
       <div class="relative pl-8">
-        <div class="absolute left-0 top-2 bottom-0 w-px bg-gradient-to-b from-green-400 to-transparent"></div>
+        <div class="absolute left-0 top-2 bottom-0 w-px bg-gradient-to-b from-white/25 to-transparent"></div>
 
         @for (item of service.timeline(); track item.id) {
           <div class="tl-item relative mb-12">
 
             <!-- Dot -->
-            <div class="absolute -left-[34px] top-1.5 w-2.5 h-2.5 rounded-full border-2 border-green-400"
-                 [class.bg-green-400]="item.active"
+            <div class="absolute -left-[34px] top-1.5 w-2.5 h-2.5 rounded-full border-2 border-sky-500"
+                 [class.bg-sky-500]="item.active"
                  [class.bg-transparent]="!item.active"
-                 [style.box-shadow]="item.active ? '0 0 12px rgba(0,255,136,0.6)' : 'none'">
+                 [style.box-shadow]="item.active ? '0 0 12px rgba(56,189,248,0.5)' : 'none'">
             </div>
 
             <!-- Date + type -->
             <div class="flex flex-wrap items-center gap-2 mb-2">
-              <span class="text-green-400 text-xs font-mono tracking-widest">{{ item.date }}</span>
+              <span class="text-neutral-400 text-xs font-mono tracking-widest">{{ item.date }}</span>
               <span class="text-[10px] font-mono px-2 py-0.5 rounded border"
                     [style.color]="getTypeColor(item.type)"
                     [style.border-color]="getTypeColor(item.type) + '40'">
                 {{ getTypeLabel(item.type) }}
               </span>
               @if (item.active) {
-                <span class="flex items-center gap-1 text-[10px] font-mono text-green-400">
-                  <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                <span class="flex items-center gap-1 text-[10px] font-mono text-sky-400">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
                   En cours
                 </span>
               }
             </div>
 
-            <h3 class="text-xl text-slate-200 mb-1"
-                style="font-family: 'Syne', sans-serif; font-weight: 700">
+            <h3 class="text-xl text-white mb-1 font-display font-bold">
               {{ item.title }}
             </h3>
-            <div class="text-blue-400 text-sm font-mono mb-3">{{ item.company }}</div>
-            <p class="text-slate-500 text-sm leading-relaxed mb-4">{{ item.description }}</p>
+            <div class="text-sky-400/90 text-sm font-mono mb-3">{{ item.company }}</div>
+            <p class="text-neutral-500 text-sm leading-relaxed mb-4">{{ item.description }}</p>
 
             <div class="flex flex-wrap gap-2">
               @for (tag of item.tags; track tag) {
                 <span class="text-[10px] font-mono px-2 py-0.5 rounded
-                             bg-blue-400/5 border border-blue-400/20 text-blue-400">
+                             bg-white/[0.04] border border-white/[0.08] text-neutral-400">
                   {{ tag }}
                 </span>
               }
@@ -89,15 +86,15 @@ import { TimelineItem } from '../../models/portfolio.models';
       </div>
 
       <!-- Next step -->
-      <div class="mt-8 p-4 border border-green-400/10 rounded-lg bg-[#0a1520]">
-        <div class="font-mono text-xs text-slate-500 mb-2">
-          <span class="text-green-400">$</span> git log --future
+      <div class="mt-8 p-4 border border-white/[0.08] bg-neutral-950/80">
+        <div class="font-mono text-xs text-neutral-600 mb-2">
+          Prochaine étape
         </div>
-        <p class="font-mono text-sm text-slate-300">
-          🎯 Prochaine étape :
-          <span class="text-green-400">Certification AWS Cloud Practitioner</span>
+        <p class="font-mono text-sm text-neutral-300">
+          🎯
+          <span class="text-white">Certification AWS Cloud Practitioner</span>
         </p>
-        <p class="font-mono text-xs text-slate-500 mt-1">
+        <p class="font-mono text-xs text-neutral-500 mt-1">
           Puis AWS Solutions Architect → Kubernetes → Pipeline CI/CD production
         </p>
       </div>

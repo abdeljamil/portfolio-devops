@@ -7,8 +7,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
-        display: ['Syne', 'sans-serif'],
+        display: ['Syne', 'Inter', 'sans-serif'],
       },
       colors: {
         // Ajout des couleurs manquantes demandées par votre CSS

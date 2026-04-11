@@ -1,8 +1,8 @@
 import {
-  animate,
-  style,
-  transition,
-  trigger
+    animate,
+    style,
+    transition,
+    trigger
 } from '@angular/animations';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,18 +20,17 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
     ])
   ],
   template: `
-    <main class="min-h-screen px-6 md:px-10 pt-28 pb-20 max-w-2xl mx-auto z-10 relative"
+    <main class="min-h-screen px-5 md:px-10 pt-24 pb-20 max-w-2xl mx-auto z-10 relative"
           @fadeSlide>
 
       <div class="mb-10">
-        <div class="text-green-400 text-xs tracking-[0.2em] uppercase font-mono mb-2">
-          // Contact
+        <div class="text-[11px] tracking-[0.25em] uppercase text-neutral-600 mb-3">
+          Contact
         </div>
-        <h1 class="text-4xl md:text-5xl tracking-tight text-slate-200"
-            style="font-family: 'Syne', sans-serif; font-weight: 800">
-          Discutons <span class="text-green-400">DevOps</span>
+        <h1 class="font-display text-4xl md:text-5xl tracking-tight text-white font-bold">
+          Discutons <span class="text-neutral-400">DevOps</span>
         </h1>
-        <p class="text-slate-500 text-sm font-mono mt-4 leading-relaxed">
+        <p class="text-neutral-500 text-sm mt-4 leading-relaxed">
           Stagiaire motivé, toujours partant pour échanger sur le cloud, l'automatisation et le DevOps.
         </p>
       </div>
@@ -40,9 +39,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
       <div class="flex flex-wrap gap-3 mb-10">
         @for (link of socialLinks; track link.label) {
           <a [href]="link.url" target="_blank"
-             class="flex items-center gap-2 font-mono text-xs text-slate-300 px-4 py-2.5
-                    border border-white/10 rounded-lg no-underline
-                    hover:border-green-400/40 hover:text-green-400 hover:-translate-y-0.5
+             class="flex items-center gap-2 font-mono text-xs text-neutral-400 px-4 py-2.5
+                    border border-white/[0.1] no-underline
+                    hover:border-white/25 hover:text-white hover:-translate-y-0.5
                     transition-all duration-200">
             <span>{{ link.icon }}</span>
             <span>{{ link.label }}</span>
@@ -61,7 +60,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
       @if (!submitted()) {
         <form [formGroup]="contactForm"
               (ngSubmit)="onSubmit()"
-              class="space-y-5 bg-[#0a1520] border border-white/[0.06] rounded-lg p-6">
+              class="space-y-5 bg-neutral-950 border border-white/[0.08] p-6">
 
           <!-- Terminal bar -->
           <div class="flex items-center gap-2 -mx-6 -mt-6 mb-6 px-4 py-2.5
@@ -74,13 +73,13 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
           <!-- Name -->
           <div>
-            <label class="block font-mono text-xs text-slate-500 mb-1.5 tracking-wider uppercase">
-              <span class="text-green-400">$</span> nom *
+            <label class="block font-mono text-xs text-neutral-500 mb-1.5 tracking-wider uppercase">
+              nom *
             </label>
             <input formControlName="name" type="text" placeholder="Votre nom"
-                   class="w-full bg-white/[0.03] border border-white/10 rounded px-4 py-2.5
-                          font-mono text-sm text-slate-200 placeholder-slate-600
-                          focus:outline-none focus:border-green-400/50 transition-all">
+                   class="w-full bg-white/[0.03] border border-white/10 px-4 py-2.5
+                          font-mono text-sm text-neutral-200 placeholder-neutral-600
+                          focus:outline-none focus:border-white/30 transition-all">
             @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
               <p class="text-red-400 text-xs font-mono mt-1">⚠ Ce champ est requis</p>
             }
@@ -88,13 +87,13 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
           <!-- Email -->
           <div>
-            <label class="block font-mono text-xs text-slate-500 mb-1.5 tracking-wider uppercase">
-              <span class="text-green-400">$</span> email *
+            <label class="block font-mono text-xs text-neutral-500 mb-1.5 tracking-wider uppercase">
+              email *
             </label>
             <input formControlName="email" type="email" placeholder="votre@email.com"
-                   class="w-full bg-white/[0.03] border border-white/10 rounded px-4 py-2.5
-                          font-mono text-sm text-slate-200 placeholder-slate-600
-                          focus:outline-none focus:border-green-400/50 transition-all">
+                   class="w-full bg-white/[0.03] border border-white/10 px-4 py-2.5
+                          font-mono text-sm text-neutral-200 placeholder-neutral-600
+                          focus:outline-none focus:border-white/30 transition-all">
             @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
               <p class="text-red-400 text-xs font-mono mt-1">⚠ Email invalide</p>
             }
@@ -102,13 +101,13 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
           <!-- Message -->
           <div>
-            <label class="block font-mono text-xs text-slate-500 mb-1.5 tracking-wider uppercase">
-              <span class="text-green-400">$</span> message *
+            <label class="block font-mono text-xs text-neutral-500 mb-1.5 tracking-wider uppercase">
+              message *
             </label>
             <textarea formControlName="message" rows="5" placeholder="Votre message..."
-                      class="w-full bg-white/[0.03] border border-white/10 rounded px-4 py-2.5
-                             font-mono text-sm text-slate-200 placeholder-slate-600
-                             focus:outline-none focus:border-green-400/50 transition-all resize-none">
+                      class="w-full bg-white/[0.03] border border-white/10 px-4 py-2.5
+                             font-mono text-sm text-neutral-200 placeholder-neutral-600
+                             focus:outline-none focus:border-white/30 transition-all resize-none">
             </textarea>
             @if (contactForm.get('message')?.invalid && contactForm.get('message')?.touched) {
               <p class="text-red-400 text-xs font-mono mt-1">⚠ Message trop court (min. 10 caractères)</p>
@@ -118,26 +117,25 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
           <!-- Submit -->
           <button type="submit"
                   [disabled]="contactForm.invalid"
-                  class="w-full font-mono text-xs uppercase tracking-widest py-3 rounded font-bold
-                         bg-green-400 text-[#050a0e] cursor-pointer border-none
+                  class="w-full font-mono text-xs uppercase tracking-widest py-3 font-bold
+                         bg-white text-black cursor-pointer border-none
                          disabled:opacity-40 disabled:cursor-not-allowed
-                         hover:shadow-[0_8px_24px_rgba(0,255,136,0.3)] hover:-translate-y-0.5
+                         hover:bg-neutral-200 hover:-translate-y-0.5
                          transition-all duration-200">
             @if (sending()) { ⏳ Envoi en cours... }
             @else { 🚀 Envoyer le message }
           </button>
         </form>
       } @else {
-        <div class="bg-[#0a1520] border border-white/[0.06] rounded-lg p-8 text-center" @fadeSlide>
+        <div class="bg-neutral-950 border border-white/[0.08] p-8 text-center" @fadeSlide>
           <div class="text-5xl mb-4">✅</div>
-          <h3 class="text-xl text-green-400 mb-2"
-              style="font-family: 'Syne', sans-serif; font-weight: 700">
+          <h3 class="text-xl text-white mb-2 font-display font-bold">
             Message envoyé !
           </h3>
-          <p class="font-mono text-sm text-slate-500 mb-4">Je vous répondrai dans les plus brefs délais.</p>
+          <p class="font-mono text-sm text-neutral-500 mb-4">Je vous répondrai dans les plus brefs délais.</p>
           <button (click)="submitted.set(false)"
-                  class="font-mono text-xs text-green-400 border border-green-400/30 px-4 py-2 rounded
-                         hover:border-green-400 transition-colors bg-transparent cursor-pointer">
+                  class="font-mono text-xs text-neutral-400 border border-white/20 px-4 py-2
+                         hover:border-white/40 hover:text-white transition-colors bg-transparent cursor-pointer">
             Envoyer un autre message
           </button>
         </div>

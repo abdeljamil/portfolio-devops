@@ -1,10 +1,10 @@
 import {
-  animate,
-  query,
-  stagger,
-  style,
-  transition,
-  trigger,
+    animate,
+    query,
+    stagger,
+    style,
+    transition,
+    trigger,
 } from '@angular/animations'
 import { Component, computed, inject, signal } from '@angular/core'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
@@ -66,24 +66,23 @@ interface Certification {
   ],
   template: `
     <main
-      class="min-h-screen px-6 md:px-10 pt-28 pb-20 max-w-4xl mx-auto z-10 relative"
+      class="min-h-screen px-5 md:px-10 pt-24 pb-20 max-w-4xl mx-auto z-10 relative"
       @pageEnter
     >
       <!-- Header -->
       <div class="mb-12">
         <div
-          class="text-green-400 text-xs tracking-[0.2em] uppercase font-mono mb-2"
+          class="text-[11px] tracking-[0.25em] uppercase text-neutral-600 mb-3"
         >
-          // Certifications
+          Certifications
         </div>
         <h1
-          class="text-4xl md:text-5xl tracking-tight text-slate-200"
-          style="font-family: 'Syne', sans-serif; font-weight: 800"
+          class="font-display text-4xl md:text-5xl tracking-tight text-white font-bold"
         >
           Mes
-          <span class="text-green-400">certifications</span>
+          <span class="text-neutral-400">certifications</span>
         </h1>
-        <p class="text-slate-500 text-sm font-mono mt-3">
+        <p class="text-neutral-500 text-sm font-mono mt-3">
           {{ certifications.length }} certification(s) obtenue(s) en ligne
         </p>
       </div>
@@ -92,11 +91,11 @@ interface Certification {
       <div class="mb-12">
         <div class="flex items-center gap-3 mb-6">
           <span class="text-2xl">🛠️</span>
-          <h2 class="text-xl text-slate-200 font-mono font-bold">
+          <h2 class="text-xl text-white font-mono font-bold">
             DevOps &
-            <span class="text-green-400">Cloud</span>
+            <span class="text-sky-400">Cloud</span>
           </h2>
-          <div class="flex-1 h-px bg-green-400/10 ml-2"></div>
+          <div class="flex-1 h-px bg-white/10 ml-2"></div>
           <span class="text-xs font-mono text-slate-500 ml-2">
             {{ devopsCerts().length }} certif(s)
           </span>
@@ -106,7 +105,7 @@ interface Certification {
           @for (cert of devopsCerts(); track cert.id) {
             <div
               class="cert-card group relative p-6 rounded-xl border
-                        bg-[#0a1520] transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+                        bg-neutral-950 transition-all duration-300 cursor-pointer hover:scale-[1.02]"
               [style.border-color]="cert.accentColor + '30'"
               (click)="openPdf(cert)"
             >
@@ -144,7 +143,7 @@ interface Certification {
               </div>
 
               <h3
-                class="text-lg text-slate-200 mb-3 leading-snug"
+                class="text-lg text-white mb-3 leading-snug"
                 style="font-family: 'Syne', sans-serif; font-weight: 700"
               >
                 {{ cert.title }}
@@ -154,13 +153,13 @@ interface Certification {
                 <div
                   class="flex items-center gap-2 text-xs font-mono text-slate-500"
                 >
-                  <span class="text-green-400">📅</span>
+                  <span class="text-sky-400">📅</span>
                   <span>Obtenu le {{ cert.date }}</span>
                 </div>
                 <div
                   class="flex items-center gap-2 text-xs font-mono text-slate-500"
                 >
-                  <span class="text-green-400">#</span>
+                  <span class="text-sky-400">#</span>
                   <span>Certificat n° {{ cert.certNumber }}</span>
                 </div>
               </div>
@@ -181,7 +180,7 @@ interface Certification {
               <!-- Ce que j'ai appris -->
               @if (cert.learned) {
                 <div
-                  class="mb-3 p-3 rounded-lg bg-[#050a0e] border border-slate-800"
+                  class="mb-3 p-3 rounded-lg bg-black border border-slate-800"
                 >
                   <div class="text-[10px] font-mono text-slate-500 mb-1">
                     <span [style.color]="cert.accentColor">▸</span>
@@ -229,7 +228,7 @@ interface Certification {
       <div class="mb-12">
         <div class="flex items-center gap-3 mb-6">
           <span class="text-2xl">🅰️</span>
-          <h2 class="text-xl text-slate-200 font-mono font-bold">
+          <h2 class="text-xl text-white font-mono font-bold">
             Frontend &
             <span class="text-blue-400">Angular</span>
           </h2>
@@ -241,7 +240,7 @@ interface Certification {
 
         @if (frontendCerts().length === 0) {
           <div
-            class="p-6 rounded-xl border border-slate-800 bg-[#0a1520] text-center"
+            class="p-6 rounded-xl border border-slate-800 bg-neutral-950 text-center"
           >
             <p class="text-slate-500 font-mono text-sm">
               🚧 Certifications Frontend en cours d'obtention...
@@ -253,7 +252,7 @@ interface Certification {
           @for (cert of frontendCerts(); track cert.id) {
             <div
               class="cert-card group relative p-6 rounded-xl border
-                        bg-[#0a1520] transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+                        bg-neutral-950 transition-all duration-300 cursor-pointer hover:scale-[1.02]"
               [style.border-color]="cert.accentColor + '30'"
               (click)="openPdf(cert)"
             >
@@ -291,7 +290,7 @@ interface Certification {
               </div>
 
               <h3
-                class="text-lg text-slate-200 mb-3 leading-snug"
+                class="text-lg text-white mb-3 leading-snug"
                 style="font-family: 'Syne', sans-serif; font-weight: 700"
               >
                 {{ cert.title }}
@@ -328,7 +327,7 @@ interface Certification {
               <!-- Ce que j'ai appris -->
               @if (cert.learned) {
                 <div
-                  class="mb-3 p-3 rounded-lg bg-[#050a0e] border border-slate-800"
+                  class="mb-3 p-3 rounded-lg bg-black border border-slate-800"
                 >
                   <div class="text-[10px] font-mono text-slate-500 mb-1">
                     <span [style.color]="cert.accentColor">▸</span>
@@ -376,7 +375,7 @@ interface Certification {
       <div class="mb-12">
         <div class="flex items-center gap-3 mb-6">
           <span class="text-2xl">🐍</span>
-          <h2 class="text-xl text-slate-200 font-mono font-bold">
+          <h2 class="text-xl text-white font-mono font-bold">
             Backend &
             <span class="text-purple-400">Data</span>
           </h2>
@@ -388,7 +387,7 @@ interface Certification {
 
         @if (backendCerts().length === 0) {
           <div
-            class="p-6 rounded-xl border border-slate-800 bg-[#0a1520] text-center"
+            class="p-6 rounded-xl border border-slate-800 bg-neutral-950 text-center"
           >
             <p class="text-slate-500 font-mono text-sm">
               🚧 Certifications Backend en cours d'obtention...
@@ -400,7 +399,7 @@ interface Certification {
           @for (cert of backendCerts(); track cert.id) {
             <div
               class="cert-card group relative p-6 rounded-xl border
-                bg-[#0a1520] transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+                bg-neutral-950 transition-all duration-300 cursor-pointer hover:scale-[1.02]"
               [style.border-color]="cert.accentColor + '30'"
               (click)="openPdf(cert)"
             >
@@ -436,7 +435,7 @@ interface Certification {
                 </div>
               </div>
               <h3
-                class="text-lg text-slate-200 mb-3 leading-snug"
+                class="text-lg text-white mb-3 leading-snug"
                 style="font-family: 'Syne', sans-serif; font-weight: 700"
               >
                 {{ cert.title }}
@@ -469,7 +468,7 @@ interface Certification {
               </div>
               @if (cert.learned) {
                 <div
-                  class="mb-3 p-3 rounded-lg bg-[#050a0e] border border-slate-800"
+                  class="mb-3 p-3 rounded-lg bg-black border border-slate-800"
                 >
                   <div class="text-[10px] font-mono text-slate-500 mb-1">
                     <span [style.color]="cert.accentColor">▸</span> Ce que j'ai
@@ -511,14 +510,14 @@ interface Certification {
       </div>
 
       <!-- Section "En cours" -->
-      <div class="mt-12 p-4 border border-green-400/10 rounded-lg bg-[#0a1520]">
+      <div class="mt-12 p-4 border border-white/10 rounded-lg bg-neutral-950">
         <div class="font-mono text-xs text-slate-500 mb-2">
-          <span class="text-green-400">$</span>
+          <span class="text-sky-400">$</span>
           certifications --next
         </div>
         <p class="font-mono text-sm text-slate-300">
           🎯 Prochaine certification :
-          <span class="text-green-400">AWS Cloud Practitioner</span>
+          <span class="text-sky-400">AWS Cloud Practitioner</span>
         </p>
         <p class="font-mono text-xs text-slate-500 mt-1">
           Puis AWS Solutions Architect Associate → Certified Kubernetes
@@ -538,25 +537,25 @@ interface Certification {
           (click)="closePdf()"
         ></div>
         <div
-          class="relative z-10 w-full max-w-4xl h-[90vh] rounded-xl border border-green-400/20
-                    bg-[#050a0e] flex flex-col overflow-hidden"
+          class="relative z-10 w-full max-w-4xl h-[90vh] rounded-xl border border-white/15
+                    bg-black flex flex-col overflow-hidden"
         >
           <div
-            class="flex items-center justify-between px-6 py-4 border-b border-green-400/10"
+            class="flex items-center justify-between px-6 py-4 border-b border-white/10"
           >
             <div>
               <div class="text-xs font-mono text-slate-500 mb-1">
                 //
                 {{ selectedCert()!.organism }}
               </div>
-              <div class="text-sm font-mono text-slate-200 font-bold">
+              <div class="text-sm font-mono text-white font-bold">
                 {{ selectedCert()!.title }}
               </div>
             </div>
             <button
               class="flex items-center gap-2 px-3 py-1.5 rounded-lg border
-                           border-green-400/20 text-green-400 text-xs font-mono
-                           hover:bg-green-400/10 transition-colors bg-transparent cursor-pointer"
+                           border-white/15 text-sky-400 text-xs font-mono
+                           hover:bg-white/5 transition-colors bg-transparent cursor-pointer"
               (click)="closePdf()"
             >
               <span>✕</span><span>Fermer</span>

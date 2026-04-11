@@ -1,14 +1,15 @@
 import {
-  animate,
-  query,
-  stagger,
-  style,
-  transition,
-  trigger,
+    animate,
+    query,
+    stagger,
+    style,
+    transition,
+    trigger,
 } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DevopsProgressService } from '../../core/services/devops-progress.service';
+import { TimelineItem } from '../../models/portfolio.models';
 import { ProgressBarComponent } from '../../shared/components/progress-bar/progress-bar.component';
 
 @Component({
@@ -17,174 +18,10 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
   imports: [RouterLink, ProgressBarComponent],
   styles: [
     `
-      .profile-ring {
-        position: relative;
-        width: 280px;
-        height: 280px;
-      }
-
-      /* Anneau tournant conic-gradient */
-      .profile-ring::before {
-        content: '';
-        position: absolute;
-        inset: -4px;
-        border-radius: 50%;
-        background: conic-gradient(
-          #00ff88 0deg,
-          #00ff88 110deg,
-          #00cc6a 110deg,
-          transparent 160deg,
-          transparent 200deg,
-          #00ff88 200deg,
-          #00ff88 310deg,
-          transparent 310deg
-        );
-        animation: ring-spin 3s linear infinite;
-        z-index: 1;
-      }
-
-      /* Second anneau inverse, plus léger */
-      .profile-ring::after {
-        content: '';
-        position: absolute;
-        inset: -9px;
-        border-radius: 50%;
-        background: conic-gradient(
-          transparent 0deg,
-          rgba(0, 255, 136, 0.15) 90deg,
-          transparent 180deg,
-          rgba(0, 255, 136, 0.08) 270deg,
-          transparent 360deg
-        );
-        animation: ring-spin 6s linear infinite reverse;
-        z-index: 0;
-      }
-
-      @keyframes ring-spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* Wrapper photo — masque le bg derrière le ring */
-      .profile-img-mask {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        overflow: hidden;
-        z-index: 2;
-        border: 4px solid #050a0e;
-      }
-
-      .profile-img-mask img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
-        display: block;
-        transition: transform 0.5s ease;
-      }
-
-      .profile-ring:hover .profile-img-mask img {
-        transform: scale(1.04);
-      }
-
-      /* Halo pulsant derrière */
-      .profile-halo {
-        position: absolute;
-        inset: -24px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          rgba(0, 255, 136, 0.1) 0%,
-          transparent 65%
-        );
-        animation: halo-pulse 2.5s ease-in-out infinite;
-        z-index: 0;
-      }
-
-      @keyframes halo-pulse {
-        0%,
-        100% {
-          opacity: 0.5;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1.08);
-        }
-      }
-
-      /* Badge "Disponible" */
-      .avail-badge {
-        position: absolute;
-        bottom: 4px;
-        right: 4px;
-        z-index: 10;
-        background: #050a0e;
-        border: 1px solid rgba(0, 255, 136, 0.6);
-        border-radius: 20px;
-        padding: 4px 10px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 10px;
-        font-family: 'JetBrains Mono', monospace;
-        color: #00ff88;
-        box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
-      }
-
-      .avail-dot {
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: #00ff88;
-        animation: dot-blink 1.5s ease-in-out infinite;
-      }
-
-      @keyframes dot-blink {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.3;
-        }
-      }
-
-      /* Coins HUD */
-      .hud-corner {
-        position: absolute;
-        width: 14px;
-        height: 14px;
-        border-color: rgba(0, 255, 136, 0.5);
-        border-style: solid;
-      }
-      .hud-tl {
-        top: -14px;
-        left: -14px;
-        border-width: 2px 0 0 2px;
-      }
-      .hud-tr {
-        top: -14px;
-        right: -14px;
-        border-width: 2px 2px 0 0;
-      }
-      .hud-bl {
-        bottom: -14px;
-        left: -14px;
-        border-width: 0 0 2px 2px;
-      }
-      .hud-br {
-        bottom: -14px;
-        right: -14px;
-        border-width: 0 2px 2px 0;
-      }
-
       .skill-item {
         opacity: 0;
-        transform: translateY(20px);
-        animation: skill-card-enter 0.5s ease forwards;
+        transform: translateY(16px);
+        animation: skill-card-enter 0.55s ease forwards;
         animation-delay: var(--skill-delay, 0ms);
       }
 
@@ -194,6 +31,14 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
           transform: translateY(0);
         }
       }
+
+      .hero-area-grid {
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+      }
     `,
   ],
   animations: [
@@ -202,10 +47,10 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
         query(
           '.hero-item',
           [
-            style({ opacity: 0, transform: 'translateY(30px)' }),
-            stagger(80, [
+            style({ opacity: 0, transform: 'translateY(24px)' }),
+            stagger(70, [
               animate(
-                '0.6s ease',
+                '0.55s ease',
                 style({ opacity: 1, transform: 'translateY(0)' }),
               ),
             ]),
@@ -214,208 +59,176 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
         ),
       ]),
     ]),
-    trigger('photoEnter', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'scale(0.8)' }),
-        animate(
-          '0.9s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          style({ opacity: 1, transform: 'scale(1)' }),
-        ),
-      ]),
-    ]),
   ],
   template: `
-    <!-- ── HERO ── -->
     <section
-      class="relative min-h-screen flex items-center px-6 md:px-10 pt-28 pb-16 z-10"
+      class="relative z-10 min-h-[min(100vh,900px)] flex flex-col justify-center px-5 md:px-10 pt-24 pb-16 lg:pt-28"
       @heroEnter
     >
       <div
-        class="max-w-6xl mx-auto w-full flex flex-col lg:flex-row items-center gap-16 lg:gap-20"
+        class="max-w-6xl mx-auto w-full grid grid-cols-1 xl:grid-cols-[200px_minmax(0,1fr)_280px] gap-10 xl:gap-14 items-start"
       >
-        <!-- LEFT: contenu texte -->
-        <div class="flex-1 order-2 lg:order-1">
-          <div class="hero-item font-mono text-xs mb-4">
-            <!-- <span class="text-blue-400">~/portfolio</span> -->
-            <span class="text-slate-500"> ~/abdel-jamil </span>
-            <span class="text-slate-500"> $ </span>
-            <span class="text-green-400">whoami</span>
+        <!-- Photo (fichier dans public/ → URL absolue /pountounyinyi.jpg) -->
+        <div class="mx-auto w-full max-w-[220px] xl:max-w-none xl:mx-0 xl:pt-2">
+          <div
+            class="text-[11px] tracking-[0.25em] uppercase text-neutral-600 mb-4 text-center xl:text-left"
+          >
+            Profil
+          </div>
+          <div
+            class="aspect-square overflow-hidden border border-white/[0.12] bg-neutral-950"
+          >
+            <img
+              src="/pountounyinyi.jpg"
+              width="400"
+              height="400"
+              alt="Photo de profil"
+              class="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-[filter] duration-500"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        </div>
+
+        <!-- Colonne principale -->
+        <div class="relative min-w-0">
+          <div
+            class="hero-item inline-flex items-center border border-white/15 px-3 py-1.5 mb-8 text-[10px] tracking-[0.2em] uppercase text-neutral-500"
+          >
+            Disponible pour projets
           </div>
 
           <h1
-            class="hero-item leading-[1.05] tracking-tight mb-2"
-            style="font-family: 'Syne', sans-serif; font-weight: 800"
+            class="hero-item font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.08] mb-3"
           >
-            <div class="text-4xl md:text-[3.5rem] text-slate-200">
-              Ingénieur en
-            </div>
-            <div class="text-4xl md:text-[3.5rem] text-green-400">
-              devenir DevOps<span class="animate-pulse">_</span>
-            </div>
+            Bonjour, je suis Abdel-Jamil.
           </h1>
-
           <p
-            class="hero-item font-mono text-sm text-slate-500 leading-7 mt-6 mb-8 max-w-md
-                     border-l-2 border-green-400 pl-4"
+            class="hero-item text-lg md:text-xl font-semibold text-white/90 mb-6"
           >
-            Stagiaire passionné, je construis ma stack DevOps brique par brique.
-            Linux → Docker → AWS → CI/CD. Ce portfolio évolue avec ma
-            progression en temps réel.
+            Stagiaire DevOps · Projets personnels &amp; formation continue
+          </p>
+          <p
+            class="hero-item text-base text-neutral-500 leading-relaxed max-w-xl mb-10"
+          >
+            Je construis ma stack Linux → Docker → AWS → CI/CD, une brique à la
+            fois. Ce site reflète ma progression en temps réel : roadmap,
+            projets et certifications orientés le monde du cloud et de
+            l’automatisation.
           </p>
 
-          <!-- Tags -->
-          <div class="hero-item flex flex-wrap gap-2 mb-8">
-            @for (tag of heroTags; track tag.label) {
-              <span
-                class="text-xs font-mono px-3 py-1 rounded border tracking-widest uppercase"
-                [style.color]="tag.color"
-                [style.border-color]="tag.color + '50'"
-                [style.background-color]="tag.color + '0D'"
-              >
-                {{ tag.label }}
-              </span>
-            }
-          </div>
-
-          <!-- CTAs -->
-          <div class="hero-item flex flex-wrap gap-4 mb-6">
+          <div class="hero-item flex flex-wrap gap-4 mb-10">
             <a
               routerLink="/projets"
-              class="font-mono text-xs uppercase tracking-widest px-6 py-3 rounded
-                      bg-green-400 text-[#050a0e] font-bold no-underline cursor-pointer
-                      hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,255,136,0.3)]
-                      transition-all duration-200"
+              class="inline-flex items-center justify-center px-6 py-3 bg-white text-black text-[11px] font-semibold uppercase tracking-[0.2em] no-underline hover:bg-neutral-200 transition-colors"
             >
-              Voir mes projets
+              Voir tous les projets
             </a>
             <a
               routerLink="/contact"
-              class="font-mono text-xs uppercase tracking-widest px-6 py-3 rounded
-                      border border-white/10 text-slate-300 no-underline cursor-pointer
-                      hover:border-green-400/50 hover:text-green-400
-                      transition-all duration-200"
+              class="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/90 text-white text-[11px] font-semibold uppercase tracking-[0.2em] no-underline hover:bg-white/5 transition-colors"
             >
               Me contacter
             </a>
           </div>
 
-          <!-- Progression globale -->
-          <div class="hero-item font-mono text-xs text-slate-500">
-            <span class="text-slate-600">$</span>
-            Progression DevOps :
-            <span class="text-green-400 font-bold"
-              >{{ service.globalProgress() }}%</span
-            >
-            — <span class="text-slate-600">formation en cours</span>
-          </div>
+          <p class="hero-item text-xs text-neutral-600 font-mono">
+            Progression DevOps globale :
+            <span class="text-neutral-300">{{ service.globalProgress() }}%</span>
+          </p>
+
+          <div
+            class="hero-area-grid absolute bottom-0 left-0 right-0 h-32 -z-10 opacity-60 pointer-events-none hidden sm:block"
+            aria-hidden="true"
+          ></div>
         </div>
 
-        <!-- RIGHT: Photo de profil -->
-        <div
-          class="order-1 lg:order-2 flex-shrink-0 flex items-center justify-center"
-          @photoEnter
+        <!-- Expérience (sidebar) -->
+        <aside
+          class="xl:border-l xl:border-white/[0.08] xl:pl-8 pt-8 xl:pt-0 border-t border-white/[0.08] xl:border-t-0"
         >
-          <div class="relative" style="width: 300px; height: 300px;">
-            <!-- Halo lumineux derrière tout -->
-            <div class="profile-halo"></div>
-
-            <!-- Anneau animé + photo -->
-            <div class="profile-ring">
-              <div class="profile-img-mask">
-                <img
-                  src="pountounyinyi.jpg"
-                  alt="Pountounyinyi — Développeur DevOps"
-                  draggable="false"
-                />
-              </div>
-            </div>
-
-            <!-- Badge disponible -->
-            <div class="avail-badge">
-              <span class="avail-dot"></span>
-              Disponible
-            </div>
-
-            <!-- Coins HUD -->
-            <div class="hud-corner hud-tl"></div>
-            <div class="hud-corner hud-tr"></div>
-            <div class="hud-corner hud-bl"></div>
-            <div class="hud-corner hud-br"></div>
-
-            <!-- Texte latéral décoratif -->
-            <div
-              class="absolute top-1/2 -translate-y-1/2 -left-5 font-mono text-[9px]
-                         text-green-400/30 hidden xl:block select-none"
-              style="writing-mode: vertical-rl; letter-spacing: 0.18em;"
-            >
-              DEV · OPS · STAGE
-            </div>
-            <div
-              class="absolute top-1/2 -translate-y-1/2 -right-5 font-mono text-[9px]
-                         text-green-400/30 hidden xl:block select-none"
-              style="writing-mode: vertical-rl; letter-spacing: 0.18em;"
-            >
-              LINUX · DOCKER · AWS
-            </div>
+          <div
+            class="flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-white mb-8"
+          >
+            <span class="text-base leading-none" aria-hidden="true">💼</span>
+            Parcours
           </div>
-        </div>
+          <ul class="list-none m-0 p-0 space-y-8">
+            @for (item of experiencePreview(); track item.id) {
+              <li class="relative pl-0">
+                <div class="flex items-start justify-between gap-2">
+                  <span
+                    class="font-semibold text-white text-sm leading-snug"
+                    >{{ item.company }}</span
+                  >
+                  @if (item.active) {
+                    <span
+                      class="shrink-0 w-2 h-2 mt-1.5 rounded-full bg-sky-500 shadow-[0_0_12px_rgba(56,189,248,0.5)]"
+                      title="En cours"
+                    ></span>
+                  }
+                </div>
+                <div class="text-neutral-500 text-sm mt-1">{{ item.title }}</div>
+                <div class="text-neutral-600 text-xs mt-1.5 font-mono">
+                  {{ item.date }}
+                </div>
+              </li>
+            }
+          </ul>
+          <a
+            routerLink="/parcours"
+            class="inline-block mt-10 text-[11px] uppercase tracking-[0.2em] text-neutral-500 hover:text-white transition-colors no-underline"
+          >
+            Voir tout le parcours →
+          </a>
+        </aside>
       </div>
     </section>
 
-    <!-- ── ROADMAP DEVOPS ── -->
-    <section class="relative z-10 px-6 md:px-10 py-20 max-w-6xl mx-auto">
+    <!-- Stack -->
+    <section
+      class="relative z-10 px-5 md:px-10 py-20 max-w-6xl mx-auto border-t border-white/[0.06]"
+    >
       <div class="mb-12">
         <div
-          class="text-green-400 text-xs tracking-[0.2em] uppercase font-mono mb-2"
+          class="text-[11px] tracking-[0.25em] uppercase text-neutral-600 mb-3"
         >
-          // Stack & Progression
+          Stack &amp; progression
         </div>
         <h2
-          class="text-4xl md:text-5xl tracking-tight text-slate-200"
-          style="font-family: 'Syne', sans-serif; font-weight: 800"
+          class="font-display text-3xl md:text-4xl font-bold text-white tracking-tight"
         >
-          Ma roadmap <span class="text-green-400">DevOps</span>
+          Roadmap <span class="text-neutral-400">DevOps</span>
         </h2>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06]">
         @for (skill of service.skills(); track skill.id; let i = $index) {
           <div
-            class="skill-item bg-[#0a1520] rounded-lg p-5 border border-white/[0.06]
-                       hover:-translate-y-1 transition-all duration-300 cursor-default"
-            [style.--skill-delay.ms]="i * 300"
-            [style.border-top]="'2px solid ' + skill.accentColor"
+            class="skill-item bg-neutral-950 p-6 hover:bg-neutral-900/80 transition-colors"
+            [style.--skill-delay.ms]="i * 80"
           >
-            <div class="flex items-center justify-between mb-3">
-              <div
-                class="font-bold text-slate-200"
-                style="font-family: 'Syne', sans-serif"
-              >
+            <div class="flex items-center justify-between mb-3 gap-2">
+              <div class="font-semibold text-white text-sm">
                 {{ skill.icon }} {{ skill.name }}
               </div>
               <span
-                class="text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full border"
-                [style.color]="getStatusColor(skill.status)"
-                [style.border-color]="getStatusColor(skill.status) + '50'"
+                class="text-[10px] uppercase tracking-wider px-2 py-0.5 border border-white/10 text-neutral-400"
               >
                 {{ getStatusLabel(skill.status) }}
               </span>
             </div>
-
-            <p class="text-slate-500 text-xs leading-relaxed mb-4">
+            <p class="text-neutral-500 text-xs leading-relaxed mb-4 min-h-[3rem]">
               {{ skill.description }}
             </p>
-
             <app-progress-bar
               [value]="skill.progress"
               [color]="skill.accentColor"
             />
-
-            <div class="flex flex-wrap gap-1 mt-3">
+            <div class="flex flex-wrap gap-1 mt-4">
               @for (tag of skill.tags; track tag) {
                 <span
-                  class="text-[10px] font-mono px-1.5 py-0.5 rounded
-                             bg-white/[0.03] border border-white/[0.06] text-slate-500"
+                  class="text-[10px] px-1.5 py-0.5 text-neutral-600 border border-white/[0.06]"
                 >
                   {{ tag }}
                 </span>
@@ -430,14 +243,15 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
 export class HomeComponent {
   service: DevopsProgressService = inject(DevopsProgressService);
 
-  heroTags = [
-    { label: 'Angular 21', color: '#dd0031' },
-    { label: 'Linux', color: '#00ff88' },
-    { label: 'Docker 🔥', color: '#ff6b35' },
-    { label: 'AWS en cours', color: '#ff6b35' },
-    { label: 'CI/CD à venir', color: '#4a6b7a' },
-    { label: 'Tailwind CSS', color: '#06b6d4' },
-  ];
+  /** Aperçu type « colonne expérience » : actifs en premier, puis les autres. */
+  experiencePreview(): TimelineItem[] {
+    const items = [...this.service.timeline()];
+    items.sort((a, b) => {
+      if (a.active === b.active) return 0;
+      return a.active ? -1 : 1;
+    });
+    return items.slice(0, 6);
+  }
 
   getStatusLabel(status: string): string {
     const map: Record<string, string> = {
@@ -447,15 +261,5 @@ export class HomeComponent {
       planned: 'Futur',
     };
     return map[status] ?? status;
-  }
-
-  getStatusColor(status: string): string {
-    const map: Record<string, string> = {
-      mastered: '#00ff88',
-      learning: '#ff6b35',
-      coming: '#ff3b5c',
-      planned: '#4a6b7a',
-    };
-    return map[status] ?? '#4a6b7a';
   }
 }
