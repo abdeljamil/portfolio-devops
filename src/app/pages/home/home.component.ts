@@ -1,10 +1,10 @@
 import {
-    animate,
-    query,
-    stagger,
-    style,
-    transition,
-    trigger,
+  animate,
+  query,
+  stagger,
+  style,
+  transition,
+  trigger,
 } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -25,10 +25,23 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
         animation-delay: var(--skill-delay, 0ms);
       }
 
+      .project-item {
+        opacity: 0;
+        transform: translateX(-12px);
+        animation: project-slide-in 0.4s ease forwards;
+      }
+
       @keyframes skill-card-enter {
         to {
           opacity: 1;
           transform: translateY(0);
+        }
+      }
+
+      @keyframes project-slide-in {
+        to {
+          opacity: 1;
+          transform: translateX(0);
         }
       }
 
@@ -71,12 +84,12 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
         <!-- Photo (fichier dans public/ → URL absolue /pountounyinyi.jpg) -->
         <div class="mx-auto w-full max-w-[220px] xl:max-w-none xl:mx-0 xl:pt-2">
           <div
-            class="text-[11px] tracking-[0.25em] uppercase text-neutral-600 mb-4 text-center xl:text-left"
+            class="text-[11px] tracking-[0.25em] uppercase text-neutral-600 mb-4 text-center"
           >
             Profil
           </div>
           <div
-            class="aspect-square overflow-hidden border border-white/[0.12] bg-neutral-950"
+            class="aspect-square overflow-hidden rounded-full border border-white/[0.12] bg-neutral-950"
           >
             <img
               src="/pountounyinyi.jpg"
@@ -136,6 +149,45 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
             Progression DevOps globale :
             <span class="text-neutral-300">{{ service.globalProgress() }}%</span>
           </p>
+
+          <!-- Projets animés -->
+          <div class="hero-item mt-8 pt-8 border-t border-white/[0.08]">
+            <div class="text-[11px] tracking-[0.25em] uppercase text-neutral-600 mb-4">
+              Projets récents
+            </div>
+            <div class="space-y-3">
+              @for (project of service.projects().slice(0, 3); track project.id; let i = $index) {
+                <div
+                  class="project-item group p-3 border border-white/[0.08] hover:border-white/[0.2] hover:bg-white/[0.02] transition-all duration-300 cursor-pointer"
+                  [style.animation-delay]="(i * 100) + 'ms'"
+                >
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-start gap-2 min-w-0">
+                      <span class="text-sm mt-0.5">{{ project.icon }}</span>
+                      <div class="min-w-0">
+                        <div class="text-xs font-semibold text-white group-hover:text-sky-400 transition-colors truncate">
+                          {{ project.title }}
+                        </div>
+                        <div class="text-[10px] text-neutral-600 mt-0.5">
+                          @switch(project.status) {
+                            @case('done') {
+                              <span class="text-emerald-600">✓ Terminé</span>
+                            }
+                            @case('in-progress') {
+                              <span class="text-sky-600">→ En cours</span>
+                            }
+                            @case('planned') {
+                              <span class="text-neutral-600">◌ Prévu</span>
+                            }
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
 
           <div
             class="hero-area-grid absolute bottom-0 left-0 right-0 h-32 -z-10 opacity-60 pointer-events-none hidden sm:block"

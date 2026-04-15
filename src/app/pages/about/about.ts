@@ -17,13 +17,13 @@ import { TimelineItem } from '../../models/portfolio.models';
         <!-- Colonne gauche : à propos + photo + méta -->
         <aside class="mx-auto w-full max-w-[220px] xl:max-w-none xl:mx-0">
           <div
-            class="flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-white mb-6"
+            class="flex items-center justify-center gap-2 text-[11px] tracking-[0.25em] uppercase text-white mb-6"
           >
             <span aria-hidden="true">👤</span>
             À propos
           </div>
           <div
-            class="aspect-square overflow-hidden border border-white/[0.12] bg-neutral-950 mb-6"
+            class="aspect-square overflow-hidden rounded-full border border-white/[0.12] bg-neutral-950 mb-6"
           >
             <img
               src="/pountounyinyi.jpg"
