@@ -15,7 +15,7 @@ import { TimelineItem } from '../../models/portfolio.models';
         class="grid grid-cols-1 xl:grid-cols-[200px_minmax(0,1fr)_280px] gap-10 xl:gap-14 items-start"
       >
         <!-- Colonne gauche : à propos + photo + méta -->
-        <aside class="mx-auto w-full max-w-[220px] xl:max-w-none xl:mx-0">
+        <aside class="mx-auto w-full max-w-[280px] xl:max-w-none xl:mx-0">
           <div
             class="flex items-center justify-center gap-2 text-[11px] tracking-[0.25em] uppercase text-white mb-6"
           >
@@ -46,6 +46,12 @@ import { TimelineItem } from '../../models/portfolio.models';
               <dt class="text-neutral-600 mb-0.5">Rôle</dt>
               <dd class="text-neutral-300 normal-case tracking-normal text-xs">
                 Stagiaire DevOps / Développeur
+              </dd>
+            </div>
+            <div>
+              <dt class="text-neutral-600 mb-0.5">Entreprise</dt>
+              <dd class="text-neutral-300 normal-case tracking-normal text-xs">
+                DevOps Junior — Sygalin SAS
               </dd>
             </div>
             <div>

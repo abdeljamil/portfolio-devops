@@ -82,7 +82,7 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
         class="max-w-6xl mx-auto w-full grid grid-cols-1 xl:grid-cols-[200px_minmax(0,1fr)_280px] gap-10 xl:gap-14 items-start"
       >
         <!-- Photo (fichier dans public/ → URL absolue /pountounyinyi.jpg) -->
-        <div class="mx-auto w-full max-w-[220px] xl:max-w-none xl:mx-0 xl:pt-2">
+        <div class="mx-auto w-full max-w-[280px] xl:max-w-none xl:mx-0 xl:pt-2">
           <div
             class="text-[11px] tracking-[0.25em] uppercase text-neutral-600 mb-4 text-center"
           >
